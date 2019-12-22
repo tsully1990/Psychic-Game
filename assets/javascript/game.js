@@ -22,7 +22,6 @@ var updateGuessesSoFar = function() {
   document.querySelector("#guesses-so-far").innerHTML = guessedLetters.join(", ");
 };
 
-
 var reset = function() {
   guessesLeft = 9;
   guessedLetters = [];
@@ -31,22 +30,17 @@ var reset = function() {
   updateGuessesSoFar();
 };
 
-
 updateLetterToGuess();
 updateGuessesLeft();
-
 
 document.onkeydown = function(event) {
  
   guessesLeft--;
 
-  
   var letter = event.key.toLowerCase();
 
-  
   guessedLetters.push(letter);
 
-  
   updateGuessesLeft();
   updateGuessesSoFar();
 
@@ -57,12 +51,10 @@ document.onkeydown = function(event) {
     reset();
   }
 
-  
   if (guessesLeft === 0) {
     losses++;
     document.querySelector("#losses").innerHTML = losses;
 
-   
-    reset();
+   reset();
   }
 };
