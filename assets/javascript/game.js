@@ -1,57 +1,77 @@
+var letters = ["a", "b", "c"];
 
 
-// variables for wins losses guesses and guesses left
-var wins = ""
-var losses = ""
-var guessesLeft = 7
-var guessesSoFar = ""
+var guessedLetters = [];
+var letterToGuess = null;
+var guessesLeft = 9;
+
+// This is the counter for wins/losses
+var wins = 0;
+var losses = 0;
 
 
+var updateGuessesLeft = function() {
+  document.querySelector("#guesses-left").innerHTML = guessesLeft;
+};
 
-// Create variables that hold references to the places in the HTML where we want to display things.
-var winsText = document.getElementById("wins-text");
-var lossesText = document.getElementById("losses-text");
-var guessesLeftText = document.getElementById("guesses-text");
-var guessesSoFarText = document.getElementById("guesses-so-far-text")
+var updateLetterToGuess = function() {
+  
+  letterToGuess = letters[Math.floor(Math.random() * letters.length)];
+};
 
-// create an array for the letter choices
-var computerChoices = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-
-for (i = 0; i < computerChoices.length; i--)
-
-// This function is run whenever the user presses a key.
-document.onkeyup = function (event) {
-
-    // Determines which key was pressed.
-    var userGuess = event.key;
-    var userGuess = event.key.toLowerCase();
-
-    // Randomly chooses a choice from the options array. This is the Computer's guess.
-    var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
-
-    //take the user choice and hook it into the HTML guesses-so-far-text
-    
-
-    //make an IF statement for if the userchoice and computer choie are the same (the logic)
-    if (userGuess === computerGuess) {
-        wins++;
-        updateWins();
-    }
-
-    else {
-        losses++;
-        updateLosses();
+var updateGuessesSoFar = function() {
+  
+  document.querySelector("#guesses-so-far").innerHTML = guessedLetters.join(", ");
+};
 
 
-    }
+var reset = function() {
+  guessesLeft = 9;
+  guessedLetters = [];
+  updateLetterToGuess();
+  updateGuessesLeft();
+  updateGuessesSoFar();
+};
 
-    // Display the user wins/losses/ties.
-    winsText.textContent = "Wins: " + wins;
-    lossesText.textContent = "Losses: " + losses;
-    guessesLeftText.textContent = "Guesses Left:" + guessesLeft;
-    guessesSoFarText.textContent = "Guesses So Far:" + guessesSoFar;
 
-    function clear()
+updateLetterToGuess();
+updateGuessesLeft();
 
-    function reset()
+
+document.onkeydown = function(event) {
+ 
+  guessesLeft--;
+
+  // Lowercase the letter
+  var letter = event.key.toLowerCase();
+
+  // Then add the guess to the guessedLetters array
+  guessedLetters.push(letter);
+
+  // Then its going to run the update functions
+  updateGuessesLeft();
+  updateGuessesSoFar();
+
+
+  // We'll check if there's a match.
+  if (letter === letterToGuess) {
+
+    // If there is then we win and we'll update the HTML to display the win.
+    wins++;
+    document.querySelector("#wins").innerHTML = wins;
+
+   
+    reset();
+  }
+
+  
+  if (guessesLeft === 0) {
+
+  
+    losses++;
+    document.querySelector("#losses").innerHTML = losses;
+
+   
+    reset();
+  }
 };
