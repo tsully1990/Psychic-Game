@@ -28,6 +28,7 @@ var reset = function() {
   updateLetterToGuess();
   updateGuessesLeft();
   updateGuessesSoFar();
+  console.log("guesses left:" + guessesLeft)
 };
 
 updateLetterToGuess();
@@ -40,7 +41,7 @@ document.onkeydown = function(event) {
   var letter = event.key.toLowerCase();
 
   guessedLetters.push(letter);
-
+  console.log("guessed letter: " + guessedLetters)
   updateGuessesLeft();
   updateGuessesSoFar();
 
@@ -54,7 +55,7 @@ document.onkeydown = function(event) {
   if (guessesLeft === 0) {
     losses++;
     document.querySelector("#losses").innerHTML = losses;
-
+    
    reset();
   }
 };
